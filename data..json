@@ -1,0 +1,32 @@
+[
+    {
+        "area": "North Flint",
+        "latitude": 43.04,
+        "longitude": -83.69,
+        "lead_level": "High",
+        "bacteria_level": "Low",
+        "chlorine_level": "Moderate",
+        "disease": "Lead Poisoning",
+        "cases": 120
+    },
+    {
+        "area": "South Flint",
+        "latitude": 42.98,
+        "longitude": -83.69,
+        "lead_level": "Low",
+        "bacteria_level": "High",
+        "chlorine_level": "Moderate",
+        "disease": "Legionnaires' Disease",
+        "cases": 90
+    },
+    {
+        "area": "East Flint",
+        "latitude": 43.02,
+        "longitude": -83.63,
+        "lead_level": "Moderate",
+        "bacteria_level": "Low",
+        "chlorine_level": "High",
+        "disease": "Skin Rashes",
+        "cases": 150
+    }
+]
