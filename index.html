@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script> <!-- Heatmap Plugin for Leaflet -->
     <style>
         /* Custom CSS */
         .navbar {
@@ -22,6 +23,11 @@
         /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100%;
         }
     </style>
 </head>
@@ -72,7 +78,7 @@
 
     <!-- Interactive Map Section -->
     <section id="map" class="h-screen">
-        <div class="h-full w-full" id="map-container"></div>
+        <div class="h-full w-full" id="map"></div>
     </section>
 
     <!-- Footer Section -->
@@ -98,7 +104,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Navbar and Map -->
+    <!-- JavaScript for Navbar and Leaflet Heatmap -->
     <script>
         // Change navbar background on scroll
         window.addEventListener('scroll', function () {
@@ -110,27 +116,34 @@
             }
         });
 
-        // Leaflet.js map setup for Flint, Michigan
-        const map = L.map('map-container').setView([43.0125, -83.6875], 13);
+        // Initialize Leaflet Map with OpenStreetMap tiles
+        var map = L.map('map').setView([43.0125, -83.6875], 12); // Coordinates for Flint, Michigan
 
+        // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Heatmap plugin script
-        const heatmapData = [
-            [43.0125, -83.6875, 200],  // Flint, 200 cases
-            [43.02, -83.63, 150],       // East Flint, 150 cases
-            [42.98, -83.69, 90],        // South Flint, 90 cases
-            [43.04, -83.69, 120]        // North Flint, 120 cases
+        // Heatmap Data (air pollution data points with intensity)
+        var heatmapData = [
+            [43.0125, -83.6875, 0.8], // High pollution
+            [43.02, -83.63, 0.6],    // Moderate pollution
+            [42.98, -83.69, 0.3],    // Low pollution
+            [43.04, -83.69, 0.5]     // Moderate pollution
         ];
 
+        // Create Heatmap Layer
         L.heatLayer(heatmapData, {
-            radius: 25,
-            blur: 15,
-            maxZoom: 17,
+            radius: 25,   // Adjusts the size of each "heat" point
+            blur: 15,     // Adjusts the blur radius
+            maxZoom: 17,  // Maximum zoom level for the heatmap
+            gradient: {
+                0.4: 'blue',
+                0.6: 'lime',
+                0.8: 'orange',
+                1.0: 'red'   // The color scale from blue (low) to red (high)
+            }
         }).addTo(map);
-
     </script>
 
 </body>
